@@ -43,13 +43,13 @@ spec:
         livenessProbe: 
           httpGet:
             path: /ok
-            port: 3500
+            port: 3001
           initialDelaySeconds: 2
           periodSeconds: 5
         readinessProbe:
           httpGet:
             path: /ok
-            port: 3500
+            port: 3001
           initialDelaySeconds: 5
           periodSeconds: 5
           successThreshold: 1
