@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: api
-  namespace: three-tier
+  name: backend-deployment
+  namespace: travelmemory
   labels: 
     role: api
     env: demo
@@ -21,14 +21,12 @@ spec:
       labels:
         role: api
     spec:
-      imagePullSecrets:
-      - name: ecr-registry-secret
       containers:
-      - name: api
-        image: 407622020962.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+      - name: backend-container
+        image: saiyedin786/travelmemoryshubham:backend
         imagePullPolicy: Always
         env:
-          - name: MONGO_CONN_STR
+          - name: MONGO_URI
             value: mongodb://mongodb-svc:27017/todo?directConnection=true
           - name: MONGO_USERNAME
             valueFrom:
@@ -41,7 +39,7 @@ spec:
                 name: mongo-sec
                 key: password
         ports:
-        - containerPort: 3500
+        - containerPort: 3001
         livenessProbe: 
           httpGet:
             path: /ok
